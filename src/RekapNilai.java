@@ -29,3 +29,39 @@ public class RekapNilai {
                 System.out.println("  ditolak - nilai harus 0..100");
                 continue; // Langsung melompat ke iterasi berikutnya, pencacah tidak naik
             }
+
+            char grade;
+            /*
+             * Jika urutan dibalik (nilai >= 60 ditaruh paling atas):
+             * Nilai 85 akan langsung masuk ke blok >= 60 (kondisi pertama yang true).
+             * Akibatnya, nilai 85 akan salah mendapatkan grade 'D', bukan 'B'.
+             */
+            if (nilai >= 90) {
+                grade = 'A';
+            } else if (nilai >= 80) {
+                grade = 'B';
+            } else if (nilai >= 70) {
+                grade = 'C';
+            } else if (nilai >= 60) {
+                grade = 'D';
+            } else {
+                grade = 'E';
+            }
+
+            // Keterangan grade memakai switch lambda (Java 14+)
+            String keterangan = switch (grade) {
+                case 'A' -> "Sangat Baik";
+                case 'B' -> "Baik";
+                case 'C' -> "Cukup";
+                case 'D' -> "Kurang";
+                default -> "Tidak Lulus";
+            };
+
+            System.out.println("  Grade " + grade + " - " + keterangan);
+
+            // Tambahkan nilai ke akumulator dan naikkan pencacah karena nilai sah
+            total += nilai; // Augmented assignment
+            jumlahSah++;
+            counter++;
+
+        } while (nilai != SELESAI);
